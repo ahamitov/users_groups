@@ -1,0 +1,18 @@
+#!/bin/bash
+# Удалить пользователя test_user если он не существует
+echo -n "Введите (например test_user) имя ненужного пользователя: "
+read user
+
+read -p "Не ошибся?" answer
+case $answer in
+y) read -p "Введи правильно: " user;;
+n) echo "Вот и молодец.";;
+esac
+
+if grep $user /etc/passwd
+then
+userdel -r $user
+echo "С пользователем $user произошел несчастный случай.RIP."
+else
+echo "Пользователя $user итак нет."
+fi

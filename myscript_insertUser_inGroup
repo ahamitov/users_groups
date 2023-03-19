@@ -1,0 +1,33 @@
+#!/bin/bash
+# Добавить пользователя test_user (если он есть) в дополнительную\вторичную группу test_group (если она есть)
+user=test_user
+group=test_group
+
+if grep $user /etc/passwd
+then
+echo "Есть такой пользователь"
+
+if getent group $group
+then
+echo "Есть такая группа"
+
+usermod -a -G $group $user
+echo "Пользователь $user добавлен в группу $group"
+
+else
+echo "Создай группу $group"
+fi
+
+else
+echo "Создай пользователя $user"
+
+if grep '^'$group'' /etc/group
+then
+echo "Группа $group уже есть."
+
+else
+echo "Группы $group тоже нет."
+
+fi
+
+fi

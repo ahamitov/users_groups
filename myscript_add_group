@@ -1,0 +1,12 @@
+#!/bin/bash
+# Создать группу test_group
+
+read -p "Название (например test_group) создаваемой группы: " group
+
+if getent group $group
+then
+echo "Такая группа уже существует."
+else
+echo "Пока нет такой группы, но щаз будет."
+groupadd $group
+fi

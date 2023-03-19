@@ -1,0 +1,20 @@
+#!/bin/bash
+# Создать пользователя test_user если он не существует
+echo -n "Введите (например test_user) имя создаваемого пользователя: "
+read user
+
+read -p "Не ошибся?" answer
+case $answer in
+y) read -p "Введи правильно: " user;;
+n) echo "Вот и молодец.";;
+esac
+
+if grep $user /etc/passwd
+then
+echo "Пользователь $user уже существует."
+else
+echo "Пользователь $user не найден. Ща сотворим."
+useradd -m -G audio,netdev,cdrom,floppy,video,lp,games -s /bin/bash $user
+echo "Задай ему пароль и подтверди его:"
+passwd $user
+fi

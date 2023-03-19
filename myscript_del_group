@@ -1,0 +1,12 @@
+#!/bin/bash
+# Удаление группы test_group
+
+read -p "Название (например test_group) удаляемой группы: " group
+
+if getent group $group
+then
+groupdel $group
+echo "Кончилась группа."
+else
+echo "Нельзя удалить то, чего нет."
+fi

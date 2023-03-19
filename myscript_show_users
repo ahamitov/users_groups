@@ -1,0 +1,29 @@
+#!/bin/bash
+
+IFS=$'\n'
+
+for entry in $(cat /etc/passwd)
+do
+
+IFS=:
+n=0
+
+  for value in $entry
+  do
+  n=$(( $n + 1 ))
+
+    if [ $n -eq 1 ]
+      then user_name=$value
+    elif [ $n -eq 3 ]
+      then user_id=$value
+    elif [ $n -eq 4 ]
+      then group_id=$value
+    fi
+
+  done
+
+    if [ $user_id -gt 999 ]
+    then
+    echo "Найден пользователь $user_name с идентификатором $user_id с идентификатором основной группы $group_id"
+    fi
+done

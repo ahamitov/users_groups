@@ -1,0 +1,35 @@
+#!/bin/bash
+
+IFS=$'\n'
+
+for entry in $(cat /etc/group)
+do
+
+IFS=:
+n=0
+
+  for value in $entry
+  do
+  n=$(( $n + 1 ))
+  include_users=""
+
+    if [ $n -eq 1 ]
+      then group_name=$value
+    elif [ $n -eq 3 ]
+      then group_id=$value
+    elif [ $n -eq 4 ]
+      then include_users=$value
+    fi
+
+  done
+
+    if [ $group_id -gt 999 ]
+    then
+    echo ""
+    echo "Существует группа $group_name с идентификатором $group_id"
+        if [ -z $include_users ]
+            then echo "Не содержит пользователей."
+            else echo "Включает пользователей: $include_users."
+        fi
+    fi
+done
