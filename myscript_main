@@ -1,0 +1,34 @@
+#!/bin/bash
+trap "echo ' Trapped Ctrl-C'" SIGINT
+trap "echo Goodbye..." EXIT
+
+answer="y"
+while [ $answer = "y" ]
+do
+echo "Выбери действие:"
+echo ""
+echo "a) Создать пользователя"
+echo "b) Создать группу"
+echo "c) Показать пользователей"
+echo "d) Показать группы"
+echo "e) Включить пользователя в группу"
+echo "f) Удалить пользователя"
+echo "g) Удалить группу"
+echo ""
+read -p "Введи букву, нажми ввод: " duit
+case $duit in
+a) sudo ./myscript_add_user;;
+b) sudo ./myscript_add_group;;
+c) ./myscript_show_users;;
+d) ./myscript_show_groups;;
+e) sudo ./myscript_insertUser_inGroup;;
+f) sudo ./myscript_del_user;;
+g) sudo ./myscript_del_group;;
+esac
+
+read -p "Показать главное меню (начать сначала)?" answer
+case $answer in
+y) echo "Повторим.";; #./myscript_main;;
+n) echo "Ну, как знаешь.";;
+esac
+done
