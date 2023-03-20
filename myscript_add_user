@@ -1,5 +1,8 @@
 #!/bin/bash
 # Создать пользователя test_user если он не существует
+answer_u="y"
+while [ $answer_u = "y" ]
+do
 echo -n "Введите (например test_user) имя создаваемого пользователя: "
 read user
 
@@ -14,7 +17,18 @@ then
 echo "Пользователь $user уже существует."
 else
 echo "Пользователь $user не найден. Ща сотворим."
+echo "CоздаёM домашний каталог /home/$user"
+echo "Автоматически добавляем во вторичные группы: audio,netdev,cdrom,floppy,video,lp,games"
+echo "Определяем командную оболочку пользователя /bin/bash"
 useradd -m -G audio,netdev,cdrom,floppy,video,lp,games -s /bin/bash $user
 echo "Задай ему пароль и подтверди его:"
 passwd $user
 fi
+
+read -p "Добавить ещё? (y/n): " answer_u
+echo ""
+case $answer_u in
+y) echo "Демография не подкачала.";;
+n) echo "Свободная касса!";;
+esac
+done

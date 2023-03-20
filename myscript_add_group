@@ -1,6 +1,8 @@
 #!/bin/bash
 # Создать группу test_group
-
+answer_g="y"
+while [ $answer_g = "y" ]
+do
 read -p "Название (например test_group) создаваемой группы: " group
 
 if getent group $group
@@ -10,3 +12,11 @@ else
 echo "Пока нет такой группы, но щаз будет."
 groupadd $group
 fi
+
+read -p "Добавить ещё? (y/n): " answer_g
+echo ""
+case $answer_g in
+y) echo "Расширяемся.";;
+n) echo "Зато не лопнем.";;
+esac
+done

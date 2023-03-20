@@ -1,0 +1,49 @@
+#!/bin/bash
+# Удаление пользователя из группы
+answer_uig="y"
+while [ $answer_uig = "y" ]
+do
+read -p "Какого пользователя убрать? " user
+read -p "Из какой группы? " group
+
+if grep $user /etc/passwd
+then
+echo "Проверка на наличие пользователя прошла успешно"
+
+    if getent group $group
+    then
+    echo "Проверка на наличие группы прошла успешно"
+        if groups $user | grep ": $group "
+        then
+        echo "Не буду я исключать пользователя из его первичной группы"
+        elif groups $user | grep " $group"
+        then
+        echo "Можно удалять"
+        gpasswd -d $user $group
+        echo "Пользователь $user удален из группы $group"
+        else
+        echo "У этого пользователя нет вторичной группы $group"
+        fi
+    else
+    echo "Нет такой группы $group"
+    fi
+
+else
+echo "Нет такого пользователя $user"
+
+    if grep '^'$group'' /etc/group
+    then
+    echo "Но группа $group существует."
+    else
+    echo "И группы $group тоже нет."
+    fi
+
+fi
+
+read -p "Выкинем ещё кого-то? (y/n): " answer_uig
+echo ""
+case $answer_uig in
+y) echo "Вон поганцев.";;
+n) echo "Скажи-ка мне..";;
+esac
+done

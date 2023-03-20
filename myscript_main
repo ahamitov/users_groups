@@ -12,8 +12,9 @@ echo "b) Создать группу"
 echo "c) Показать пользователей"
 echo "d) Показать группы"
 echo "e) Включить пользователя в группу"
-echo "f) Удалить пользователя"
-echo "g) Удалить группу"
+echo "f) Исключить пользователя из группы"
+echo "g) Удалить пользователя"
+echo "h) Удалить группу"
 echo ""
 read -p "Введи букву, нажми ввод: " duit
 case $duit in
@@ -22,13 +23,15 @@ b) sudo ./myscript_add_group;;
 c) ./myscript_show_users;;
 d) ./myscript_show_groups;;
 e) sudo ./myscript_insertUser_inGroup;;
-f) sudo ./myscript_del_user;;
-g) sudo ./myscript_del_group;;
+f) sudo ./myscript_excludingUser_fromGroup;;
+g) sudo ./myscript_del_user;;
+h) sudo ./myscript_del_group;;
 esac
 
-read -p "Показать главное меню (начать сначала)?" answer
+read -p "Показать главное меню (начать сначала)? (y/n): " answer
+echo ""
 case $answer in
-y) echo "Повторим.";; #./myscript_main;;
+y) echo "Повторим.";;
 n) echo "Ну, как знаешь.";;
 esac
 done

@@ -1,33 +1,40 @@
 #!/bin/bash
 # Добавить пользователя test_user (если он есть) в дополнительную\вторичную группу test_group (если она есть)
-user=test_user
-group=test_group
+answer_uig="y"
+while [ $answer_uig = "y" ]
+do
+read -p "Какого пользователя добавляем? " user
+read -p "В какую группу? " group
 
 if grep $user /etc/passwd
 then
 echo "Есть такой пользователь"
 
-if getent group $group
-then
-echo "Есть такая группа"
-
-usermod -a -G $group $user
-echo "Пользователь $user добавлен в группу $group"
-
-else
-echo "Создай группу $group"
-fi
+    if getent group $group
+    then
+    echo "Есть такая группа"
+    usermod -a -G $group $user
+    echo "Пользователь $user добавлен в группу $group"
+    else
+    echo "Создай группу $group"
+    fi
 
 else
 echo "Создай пользователя $user"
 
-if grep '^'$group'' /etc/group
-then
-echo "Группа $group уже есть."
-
-else
-echo "Группы $group тоже нет."
-
-fi
+    if grep '^'$group'' /etc/group
+    then
+    echo "Группа $group уже есть."
+    else
+    echo "Группы $group тоже нет."
+    fi
 
 fi
+
+read -p "Добавить ещё? (y/n): " answer_uig
+echo ""
+case $answer_uig in
+y) echo "Продолжаем...";;
+n) echo "Тогда такой вопрос:";;
+esac
+done
