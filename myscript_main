@@ -4,34 +4,35 @@ trap "echo Goodbye..." EXIT
 
 answer="y"
 while [ $answer = "y" ]
-do
-echo "Выбери действие:"
-echo ""
-echo "a) Создать пользователя"
-echo "b) Создать группу"
-echo "c) Показать пользователей"
-echo "d) Показать группы"
-echo "e) Включить пользователя в группу"
-echo "f) Исключить пользователя из группы"
-echo "g) Удалить пользователя"
-echo "h) Удалить группу"
-echo ""
-read -p "Введи букву, нажми ввод: " duit
-case $duit in
-a) sudo ./myscript_add_user;;
-b) sudo ./myscript_add_group;;
-c) ./myscript_show_users;;
-d) ./myscript_show_groups;;
-e) sudo ./myscript_insertUser_inGroup;;
-f) sudo ./myscript_excludingUser_fromGroup;;
-g) sudo ./myscript_del_user;;
-h) sudo ./myscript_del_group;;
-esac
+    do
+    echo "Выбери действие:"
+    echo ""
+    echo "a) Создать пользователя"
+    echo "b) Создать группу"
+    echo "c) Показать пользователей"
+    echo "d) Показать группы"
+    echo "e) Включить пользователя в группу"
+    echo "f) Исключить пользователя из группы"
+    echo "g) Удалить пользователя"
+    echo "h) Удалить группу"
+    echo ""
 
-read -p "Показать главное меню (начать сначала)? (y/n): " answer
-echo ""
-case $answer in
-y) echo "Повторим.";;
-n) echo "Ну, как знаешь.";;
-esac
+    read -p "Введи букву, нажми ввод: " duit
+    case $duit in
+        a) sudo ./myscript_add_user;;
+        b) sudo ./myscript_add_group;;
+        c) ./myscript_show_users;;
+        d) ./myscript_show_groups;;
+        e) sudo ./myscript_insertUser_inGroup;;
+        f) sudo ./myscript_excludingUser_fromGroup;;
+        g) sudo ./myscript_del_user;;
+        h) sudo ./myscript_del_group;;
+    esac
+
+    read -p "Показать главное меню (начать сначала)? (y/n): " answer
+    echo ""
+    case $answer in
+        y) echo "Повторим.";;
+        n) echo "Ну, как знаешь.";;
+    esac
 done

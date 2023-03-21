@@ -1,10 +1,9 @@
 #!/bin/bash
-
+# Показывает созданных (с UID =>1000) пользователей за исключением nobody
 IFS=$'\n'
 
 for entry in $(cat /etc/passwd)
 do
-
 IFS=:
 n=0
 
@@ -19,11 +18,13 @@ n=0
     elif [ $n -eq 4 ]
       then group_id=$value
     fi
-
   done
 
-    if [ $user_id -gt 999 ]
-    then
-    echo "Найден пользователь $user_name с идентификатором $user_id с идентификатором основной группы $group_id"
+    if [[ $user_id -gt 999 && $user_name != "nobody" ]]
+      then
+      echo ""
+      echo "Найден пользователь $user_name с идентификатором $user_id и идентификатором основной группы $group_id"
+      echo "входит в группы:"
+      groups $user_name | sed 's/'$user_name' : //'
     fi
 done

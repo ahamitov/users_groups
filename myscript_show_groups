@@ -1,10 +1,9 @@
 #!/bin/bash
-
+# Показывает созданные (с GID =>1000) группы за исключением nogroup
 IFS=$'\n'
 
 for entry in $(cat /etc/group)
 do
-
 IFS=:
 n=0
 
@@ -20,16 +19,15 @@ n=0
     elif [ $n -eq 4 ]
       then include_users=$value
     fi
-
   done
 
-    if [ $group_id -gt 999 ]
-    then
-    echo ""
-    echo "Существует группа $group_name с идентификатором $group_id"
+    if [[ $group_id -gt 999 && $group_name != "nogroup" ]]
+      then
+      echo ""
+      echo "Существует группа $group_name с идентификатором $group_id"
         if [ -z $include_users ]
-            then echo "Не содержит пользователей."
-            else echo "Включает пользователей: $include_users."
+        then echo "Не содержит пользователей."
+        else echo "Включает пользователей: $include_users."
         fi
     fi
 done

@@ -1,22 +1,22 @@
 #!/bin/bash
-# Удаление группы test_group
+# Удаление группы
 answer_g="y"
 while [ $answer_g = "y" ]
-do
-read -p "Название (например test_group) удаляемой группы: " group
+    do
+    read -p "Название удаляемой группы: " group
 
-if getent group $group
-then
-groupdel $group
-echo "Кончилась группа."
-else
-echo "Нельзя удалить то, чего нет."
-fi
+    if getent group $group
+        then
+        groupdel $group
+        echo "Кончилась группа."
+    else
+        echo "Нельзя удалить то, чего нет."
+    fi
 
-read -p "Есть ещё ненужные группы? (y/n): " answer_g
-echo ""
-case $answer_g in
-y) echo "С чем останешься, Минхерц?";;
-n) echo "Вот и ладненько.";;
-esac
+    read -p "Есть ещё ненужные группы? (y/n): " answer_g
+    echo ""
+    case $answer_g in
+        y) echo "С чем останешься, Минхерц?";;
+        n) echo "Вот и ладненько.";;
+    esac
 done
