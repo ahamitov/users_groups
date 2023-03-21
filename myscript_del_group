@@ -5,7 +5,7 @@ while [ $answer_g = "y" ]
     do
     read -p "Название удаляемой группы: " group
 
-    if getent group $group
+    if getent group $group | grep '^'$group':x:'
         then
         groupdel $group
         echo "Кончилась группа."

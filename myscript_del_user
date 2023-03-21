@@ -6,18 +6,18 @@ while [ $answer_u = "y" ]
     echo -n "Введите имя ненужного пользователя: "
     read user
 
-    read -p "Не ошибся?" answer
-    case $answer in
-        y) read -p "Введи правильно: " user;;
-        n) echo "Вот и молодец.";;
-    esac
+    # read -p "Не ошибся?" answer
+    # case $answer in
+    #     y) read -p "Введи правильно: " user;;
+    #     n) echo "Вот и молодец.";;
+    # esac
 
-    if grep $user /etc/passwd
+    if grep '^'$user':' /etc/passwd
         then
         userdel -r $user
         echo "С пользователем $user произошел несчастный случай.RIP."
     else
-        echo "Пользователя $user итак нет."
+        echo "Пользователя $user и так нет."
     fi
 
     read -p "Ещё кого-нибудь грохнем? (y/n): " answer_u

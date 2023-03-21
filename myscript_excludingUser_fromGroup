@@ -3,14 +3,15 @@
 answer_uig="y"
 while [ $answer_uig = "y" ]
     do
+    read -p "Из какой группы удаляем? " group
     read -p "Какого пользователя убрать? " user
-    read -p "Из какой группы? " group
-
-    if grep $user /etc/passwd
+    echo ""
+    
+    if grep '^'$user':' /etc/passwd
     then
     echo "Проверка на наличие пользователя прошла успешно"
 
-        if getent group $group
+        if getent group $group | grep '^'$group':x:'
         then
         echo "Проверка на наличие группы прошла успешно"
             if groups $user | grep ": $group "
@@ -20,6 +21,7 @@ while [ $answer_uig = "y" ]
                 then
                 echo "Можно удалять"
                 gpasswd -d $user $group
+                echo ""
                 echo "Пользователь $user удален из группы $group"
             else
                 echo "У этого пользователя нет вторичной группы $group"
@@ -31,7 +33,7 @@ while [ $answer_uig = "y" ]
     else
     echo "Нет такого пользователя $user"
 
-        if grep '^'$group'' /etc/group
+        if grep '^'$group':' /etc/group
             then
             echo "Но группа $group существует."
         else

@@ -3,18 +3,20 @@
 answer_uig="y"
 while [ $answer_uig = "y" ]
     do
+    read -p "В какую группу добавим пользователя? " group
     read -p "Какого пользователя добавляем? " user
-    read -p "В какую группу? " group
-
-    if grep $user /etc/passwd
+    echo ""
+    
+    if grep '^'$user':' /etc/passwd
     then
     echo "Есть такой пользователь"
 
-        if getent group $group
+        if getent group $group | grep '^'$group':x:'
             then
             echo "Есть такая группа"
             usermod -a -G $group $user
-            echo "Пользователь $user добавлен в группу $group"
+            echo ""
+            echo "Пользователь $user добавлен во вторичную группу $group"
         else
             echo "Создай группу $group"
         fi
@@ -22,7 +24,7 @@ while [ $answer_uig = "y" ]
     else
     echo "Создай пользователя $user"
 
-        if grep '^'$group'' /etc/group
+        if grep '^'$group':' /etc/group
             then
             echo "Группа $group уже есть."
         else

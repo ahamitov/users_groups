@@ -6,13 +6,13 @@ while [ $answer_u = "y" ]
     echo -n "Введите имя создаваемого пользователя: "
     read user
 
-    read -p "Не ошибся?" answer
-    case $answer in
-        y) read -p "Введи правильно: " user;;
-        n) echo "Вот и молодец.";;
-    esac
+    # read -p "Не ошибся?" answer
+    # case $answer in
+    #     y) read -p "Введи правильно: " user;;
+    #     n) echo "Вот и молодец.";;
+    # esac
 
-    if grep $user /etc/passwd
+    if grep '^'$user':' /etc/passwd
         then
         echo "Пользователь $user уже существует."
     else
